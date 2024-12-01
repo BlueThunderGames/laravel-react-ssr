@@ -20,8 +20,7 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware(['verified'])->group(function()
     {
-        Route::get('/feature', [FeatureController::class, 'index'])->name('feature.index');
-
+        Route::resource('feature', FeatureController::class);
     });
 });
 
