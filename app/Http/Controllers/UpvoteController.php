@@ -3,27 +3,33 @@
 namespace App\Http\Controllers;
 
 use App\Models\Upvote;
+use App\Models\Feature;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class UpvoteController extends Controller
 {
-    public function store(Request $request)
+    public function store(Request $request, Feature $feature)
     {
         $data = $request->validate([
-            'feature_id' => 'required|exists:features,id',
             'upvote' => 'required|boolean',
         ]);
 
         Upvote::updateOrCreate(
             [
-                'feature_id' => $data['feature_id'],
+                'feature_id' => $feature->id,
                 'user_id' => Auth::id(),
 
             ],
             ['upvote' => $data['upvote']]
         );
 
-        return to_route('feature.index');
+        return back();
+    }
+    public function destroy(Feature $feature)
+    {
+        $feature->upvotes()->where('user_id', Auth::id())->delete();
+
+        return back();
     }
 }

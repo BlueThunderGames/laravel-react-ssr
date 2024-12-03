@@ -24,6 +24,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('feature', FeatureController::class);
 
         Route::post('/feature/{feature}/upvote', [UpvoteController::class, 'store'])->name('upvote.store');
+        Route::delete('/upvote/{feature}', [UpvoteController::class, 'destroy'])->name('upvote.destroy');
         
     });
 });
