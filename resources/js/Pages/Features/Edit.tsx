@@ -1,4 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import { Feature } from '@/types';
 import { Head, useForm, router } from '@inertiajs/react';
 import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
@@ -8,16 +9,16 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import { FormEventHandler } from 'react';
 
 
-export default function Create() {
+export default function Edit({feature}: {feature: Feature}) {
     const { data, setData, processing, errors } = useForm({
-        name: '',
-        description: '',
+        name: feature.name,
+        description: feature.description,
     });
 
-    const createFeature: FormEventHandler = (event) => {
+    const updateFeature: FormEventHandler = (event) => {
         event.preventDefault();
         
-        router.post(route('feature.store'), data, {
+        router.put(route('feature.update', feature.id), data, {
             preserveScroll: true,
         });
     };
@@ -26,14 +27,14 @@ export default function Create() {
         <AuthenticatedLayout
             header={
                 <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
-                    Create New Feature
+                    Edit Feature "{feature.name}"
                 </h2>
             }
         >
-            <Head title="Create New Feature" />            
+            <Head title={`Edit Feature ` + feature.name} />            
             <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800 mb-4">
                 <div className="p-6 text-gray-900 dark:text-gray-100 flex gap-8">
-                    <form onSubmit={createFeature} className="w-full">
+                    <form onSubmit={updateFeature} className="w-full">
                         <div className="mb-8">
                             <InputLabel htmlFor="name" value="Name" />
                             <TextInput

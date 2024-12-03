@@ -9,7 +9,7 @@ export default function Show({feature}: {feature: Feature}) {
         <AuthenticatedLayout
             header={
                 <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
-                    Feature <strong>{feature.name}</strong>
+                    Feature "{feature.name}"
                 </h2>
             }
         >

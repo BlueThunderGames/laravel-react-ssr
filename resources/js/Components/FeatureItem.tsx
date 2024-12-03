@@ -1,6 +1,7 @@
 import {Feature} from '@/types';
 import {useState} from 'react';
 import {Link} from '@inertiajs/react';
+import FeatureActionsDropdown from './FeatureActionsDropdown';
 
 
 export default function FeatureItem({feature} : {feature: Feature})
@@ -46,6 +47,9 @@ export default function FeatureItem({feature} : {feature: Feature})
                     {(feature.description || "").length <= 200 && (
                         <p>{feature.description}</p>
                     )}
+                </div>
+                <div>
+                    <FeatureActionsDropdown feature={feature} />
                 </div>
             </div>
         </div>
