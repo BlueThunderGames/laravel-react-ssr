@@ -3,6 +3,7 @@
 use App\Http\Controllers\FeatureController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UpvoteController;
+use App\Http\Controllers\CommentController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -25,6 +26,9 @@ Route::middleware('auth')->group(function () {
 
         Route::post('/feature/{feature}/upvote', [UpvoteController::class, 'store'])->name('upvote.store');
         Route::delete('/upvote/{feature}', [UpvoteController::class, 'destroy'])->name('upvote.destroy');
+
+        Route::post('/feature/{feature}/comments', [CommentController::class, 'store'])->name('comment.store');
+        Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comment.destroy');
         
     });
 });

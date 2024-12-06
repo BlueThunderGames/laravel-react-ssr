@@ -7,6 +7,7 @@ use App\Models\Upvote;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Http\Resources\FeatureResource;
+use App\Http\Resources\FeatureListResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -42,7 +43,7 @@ class FeatureController extends Controller
         ->paginate(10);
 
         return Inertia::render('Features/Index', [
-            'features' => FeatureResource::collection($paginated)
+            'features' => FeatureListResource::collection($paginated)
         ]);
     }
 
