@@ -10,6 +10,7 @@ use App\Http\Resources\FeatureResource;
 use App\Http\Resources\FeatureListResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Http\Resources\UserResource;
 
 
 
@@ -92,7 +93,19 @@ class FeatureController extends Controller
         ->exists();
 
         return Inertia::render('Features/Show', [
-            'feature' => new FeatureResource($feature)
+            'feature' => new FeatureResource($feature),
+            // defer the comments
+            'comments' => Inertia::defer(function() use ($feature){
+                // call this to defer and show after x seconds sleep(1);
+                return $feature->comments->map(function($comment){
+                    return [
+                        'id' => $comment->id,
+                        'comment' => $comment->comment,
+                        'created_at' => $comment->created_at->format('Y-m-d H:i:s'),
+                        'user' => new UserResource($comment->user),
+                    ];
+                });
+            })
         ]);
     }
 
