@@ -2,6 +2,7 @@ import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
+import { hasRole } from '@/helpers';
 import { Link, usePage } from '@inertiajs/react';
 import { PropsWithChildren, ReactNode, useState } from 'react';
 
@@ -40,6 +41,14 @@ export default function Authenticated({
                                 >
                                     Features
                                 </NavLink>
+                                {hasRole(user, 'admin') && (
+                                <NavLink
+                                    href={route('user.index')}
+                                    active={route().current('user.index')}
+                                >
+                                    Users
+                                </NavLink>
+                                )} 
                             </div>
                         </div>
 
@@ -151,6 +160,14 @@ export default function Authenticated({
                         >
                             Features
                         </ResponsiveNavLink>
+                        {hasRole(user, 'admin') && (
+                        <ResponsiveNavLink
+                            href={route('user.index')}
+                            active={route().current('user.index')}
+                        >
+                            Users
+                        </ResponsiveNavLink>
+                        )}
                     </div>
 
                     <div className="border-t border-gray-200 pb-1 pt-4 dark:border-gray-600">

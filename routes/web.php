@@ -7,6 +7,8 @@ use App\Http\Controllers\CommentController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\UserController;
+use App\Enum\RolesEnum;
 
 Route::redirect('/', '/login');
 
@@ -20,7 +22,14 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::middleware(['verified', 'role:'. \App\Enum\RolesEnum::User->value])->group(function()
+    Route::middleware(['verified', 'role:'. \App\Enum\RolesEnum::Admin->value])->group(function()
+    {
+        Route::get('/user', [UserController::class, 'index'])->name('user.index');
+        Route::get('/user/{user}', [UserController::class, 'edit'])->name('user.edit');
+        Route::put('/user/{user}', [UserController::class, 'update'])->name('user.update');
+    });
+
+    Route::middleware(['verified', sprintf('role:%s|%s|%s', RolesEnum::User->value, RolesEnum::Commenter->value, RolesEnum::Admin->value)])->group(function()
     {
         Route::resource('feature', FeatureController::class)
         ->except(['index', 'show'])
