@@ -3,8 +3,11 @@ import TextAreaInput from "./TextAreaInput";
 import {useForm} from "@inertiajs/react";
 import {FormEventHandler} from "react";
 import PrimaryButton from "./PrimaryButton";
+import {usePage} from "@inertiajs/react";
+import {can} from "../helpers";
 
 export default function NewCommentForm({feature} : {feature: Feature}) {
+    const user = usePage().props.auth.user;
     const {
         data, 
         setData,
@@ -23,6 +26,16 @@ export default function NewCommentForm({feature} : {feature: Feature}) {
             onSuccess: () => setData('comment', ''),
         })
     }
+
+    if(!can(user, 'manage_comments'))
+    {
+        return (
+            <div className="text-center text-gray-600">
+                You don't have permission to comment
+            </div>
+        );
+    }
+
     return(
         <form onSubmit={createComment} className="flex items center py-3 mb-4 rounded-lg bg-gray-50 dark:bg-gray-800">
             <TextAreaInput

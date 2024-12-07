@@ -22,13 +22,20 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware(['verified'])->group(function()
     {
-        Route::resource('feature', FeatureController::class);
+        Route::resource('feature', FeatureController::class)
+        ->except(['index', 'show'])
+        ->middleware('can:' . \App\Enum\PermissionsEnum::ManageFeatures->value);
+
+        Route::get('/feature', [FeatureController::class, 'index'])->name('feature.index');
+        Route::get('/feature/{feature}', [FeatureController::class, 'show'])->name('feature.show');
 
         Route::post('/feature/{feature}/upvote', [UpvoteController::class, 'store'])->name('upvote.store');
         Route::delete('/upvote/{feature}', [UpvoteController::class, 'destroy'])->name('upvote.destroy');
 
-        Route::post('/feature/{feature}/comments', [CommentController::class, 'store'])->name('comment.store');
-        Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comment.destroy');
+        Route::post('/feature/{feature}/comments', [CommentController::class, 'store'])->name('comment.store')
+        ->middleware('can:' . \App\Enum\PermissionsEnum::ManageComments->value);
+        Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comment.destroy')
+        ->middleware('can:' . \App\Enum\PermissionsEnum::ManageComments->value);
         
     });
 });
