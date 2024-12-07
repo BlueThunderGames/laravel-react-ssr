@@ -4,11 +4,11 @@ use App\Http\Controllers\FeatureController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UpvoteController;
 use App\Http\Controllers\CommentController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\UserController;
 use App\Enum\RolesEnum;
+use App\Http\Middleware\PreventSelfEdit;
 
 Route::redirect('/', '/login');
 
@@ -25,8 +25,10 @@ Route::middleware('auth')->group(function () {
     Route::middleware(['verified', 'role:'. \App\Enum\RolesEnum::Admin->value])->group(function()
     {
         Route::get('/user', [UserController::class, 'index'])->name('user.index');
-        Route::get('/user/{user}', [UserController::class, 'edit'])->name('user.edit');
-        Route::put('/user/{user}', [UserController::class, 'update'])->name('user.update');
+        Route::get('/user/{user}', [UserController::class, 'edit'])->name('user.edit')
+        ->middleware(PreventSelfEdit::class);
+        Route::put('/user/{user}', [UserController::class, 'update'])->name('user.update')
+        ->middleware(PreventSelfEdit::class);
     });
 
     Route::middleware(['verified', sprintf('role:%s|%s|%s', RolesEnum::User->value, RolesEnum::Commenter->value, RolesEnum::Admin->value)])->group(function()

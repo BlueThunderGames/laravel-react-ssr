@@ -51,8 +51,11 @@ export default function Index({auth, users}: PageProps<{users: User[]}>) {
                             <td className="px-6 py-4">
                                 {user.roles.join(', ')}
                             </td>
+                            
                             <td className="px-6 py-4">
+                            {user.id != auth.user.id &&(
                                 <Link className="text-blue-500" href={route('user.edit', user.id)}>Edit User</Link>
+                            )}
                             </td>
                         </tr>
                         ))}

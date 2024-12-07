@@ -44,7 +44,8 @@ class FeatureController extends Controller
         ->paginate(10);
 
         return Inertia::render('Features/Index', [
-            'features' => FeatureListResource::collection($paginated)
+            'features' => Inertia::merge(FeatureListResource::collection($paginated)->collection->toArray()),
+            'page' => $paginated->currentPage(),
         ]);
     }
 

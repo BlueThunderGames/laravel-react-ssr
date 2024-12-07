@@ -2,12 +2,12 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { PaginatedData, Feature } from '@/types';
 import { Head, usePoll } from '@inertiajs/react';
 import FeatureItem from '@/Components/FeatureItem';
-import {Link} from '@inertiajs/react';
+import {Link, WhenVisible} from '@inertiajs/react';
 import {can} from '@/helpers';
 import { PageProps } from '@/types';
 
 // This is different because we're using auth to get the user's data and passing features as a part of the PageProps
-export default function Index({auth, features}: PageProps<{features: PaginatedData<Feature>}>) {
+export default function Index({auth, features, page}: PageProps<{features: Feature[], page: number}>) {
     
     usePoll(3000);
 
@@ -26,9 +26,20 @@ export default function Index({auth, features}: PageProps<{features: PaginatedDa
                 </Link>  
             </div>}
                     
-                {features.data.map((feature) => (
+                {features.map((feature) => (
                     <FeatureItem key={feature.id} feature={feature} />
                 ))}
+                {/* Beta Feature for Lazy Loading, check this in the future to see if it's working
+                <WhenVisible fallback={<div>Loading..</div>} 
+                    params={{
+                        data: {page: page + 1},
+                        only: ['features', 'page'],
+                        //preserveUrl: true,
+
+                }}>
+                    This is visible
+                </WhenVisible>
+                */}
         </AuthenticatedLayout>
     );
 }
