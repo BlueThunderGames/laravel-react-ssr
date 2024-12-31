@@ -29,7 +29,13 @@ export default function Login({
     };
 
     return (
-        <GuestLayout>
+        <GuestLayout
+            header={
+                <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
+                    Features App - Login
+                </h2>
+            }
+        >
             <Head title="Log in" />
 
             {status && (

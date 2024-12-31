@@ -23,7 +23,13 @@ export default function Register() {
     };
 
     return (
-        <GuestLayout>
+        <GuestLayout
+            header={
+                <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
+                    Features App - Register
+                </h2>
+            }
+        >
             <Head title="Register" />
 
             <form onSubmit={submit}>
