@@ -135,6 +135,44 @@ class FeatureController extends Controller
         return to_route('feature.index')->with('success', 'Feature updated successfully.');
     }
 
+    public function fetch(Request $request)
+    {
+        $paginated = $this->getPaginatedFeatures();
+
+        return response()->json([
+            'data' => FeatureListResource::collection($paginated)->collection->toArray(),
+            'meta' => [
+                'current_page' => $paginated->currentPage(),
+                'last_page' => $paginated->lastPage(),
+                'per_page' => $paginated->perPage(),
+                'total' => $paginated->total(),
+            ],
+        ]);
+    }
+
+    private function getPaginatedFeatures()
+    {
+        $currentUserID = Auth::id();
+
+        $paginated =  Feature::latest()
+            ->withCount(['upvotes as upvote_count' => function ($query) {
+                $query->select(DB::raw('SUM(CASE WHEN upvote = 1 THEN 1 ELSE -1 END)'));
+            }])
+            ->withExists([
+                'upvotes as user_has_upvoted' => function ($query) use ($currentUserID) {
+                    $query->where('user_id', $currentUserID)
+                        ->where('upvote', 1);
+                },
+                'upvotes as user_has_downvoted' => function ($query) use ($currentUserID) {
+                    $query->where('user_id', $currentUserID)
+                        ->where('upvote', 0);
+                },
+            ])
+            ->paginate(10);
+
+        return $paginated;
+    }   
+
     /**
      * Remove the specified resource from storage.
      */

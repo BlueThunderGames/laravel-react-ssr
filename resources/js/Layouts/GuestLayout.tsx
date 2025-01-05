@@ -28,16 +28,8 @@ export default function Guest({ header, children }: PropsWithChildren<{ header?:
                                 >
                                     Login
                                 </NavLink>
-                                <NavLink
-                                    prefetch="hover"
-                                    href={route('register')}
-                                    active={route().current('register')}
-                                >
-                                    Register
-                                </NavLink>
                             </div>
                         </div>
-
                         <div className="-me-2 flex items-center sm:hidden">
                             <button
                                 onClick={() =>
@@ -94,13 +86,6 @@ export default function Guest({ header, children }: PropsWithChildren<{ header?:
                         >
                             Login
                         </ResponsiveNavLink>
-
-                        <ResponsiveNavLink
-                            href={route('register')}
-                            active={route().current('register')}
-                        >
-                            Register
-                        </ResponsiveNavLink>
                     </div>
                 </div>
             </nav>
@@ -112,7 +97,7 @@ export default function Guest({ header, children }: PropsWithChildren<{ header?:
                 </header>
             )}
             <div className="py-12">
-                <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                <div className="mx-auto max-w-7xl px-6 lg:px-8">
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800">
                         <div className="p-6 text-gray-900 dark:text-gray-100">
                             <main>{children}</main>

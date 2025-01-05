@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 class AppServiceProvider extends ServiceProvider
 {

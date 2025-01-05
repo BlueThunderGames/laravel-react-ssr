@@ -17,7 +17,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = User::where('id', '!=', 1)
+        ->where('id', '!=', 2)
+        ->where('id', '!=', 3)
+        ->get();
+
         return Inertia::render('User/Index', [
             'users' => AuthUserResource::collection($users)->collection->toArray(),
         ]);
@@ -28,6 +32,10 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        if($user->id == 1 || $user->id == 2 || $user->id == 3) {
+            return back()->with('error', 'You are not allowed to edit this user');
+        }
+        
         return Inertia::render('User/Edit', [
             'user' => new AuthUserResource($user),
             'roles' => Role::all(),
