@@ -1,10 +1,33 @@
 import Dropdown from '@/Components/Dropdown';
 import { Feature } from '@/types/';
+import axios from 'axios';
 import {can} from '@/helpers';
 import { usePage } from '@inertiajs/react';
 
-export default function FeatureActionsDropdown({feature}: {feature: Feature})
-{
+interface FeatureActionsDropdownProps {
+    feature: Feature;
+    onDelete: (id: number) => void;
+}
+
+const FeatureActionsDropdown: React.FC<FeatureActionsDropdownProps> = ({ feature, onDelete }) => {
+    const handleDelete = async (e: React.MouseEvent) => {
+        e.preventDefault();
+        onDelete(feature.id);
+        
+        try {
+            await axios.post(route('feature.destroy', { feature: feature.id }), {
+                _method: 'DELETE',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '',
+                },
+            });
+            
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     const user = usePage().props.auth.user;
 
     if(!can(user, 'manage_features'))
@@ -46,9 +69,9 @@ export default function FeatureActionsDropdown({feature}: {feature: Feature})
                 Edit Feature
             </Dropdown.Link>
             <Dropdown.Link
-                href={route('feature.destroy', feature.id)}
-                method="delete"
+                onClick={handleDelete}
                 as="button"
+                href="#"
             >
                 Delete Feature
             </Dropdown.Link>
@@ -57,3 +80,5 @@ export default function FeatureActionsDropdown({feature}: {feature: Feature})
     </Dropdown>
     );
 }
+
+export default FeatureActionsDropdown;

@@ -10,7 +10,7 @@ export default function Introduction() {
                 </h2>
             }
         >
-            <Head title="Features App Introduction" />
+            <Head title="Introduction" />
             <div className="intro-upper mb-6">
                 <h3 className="text-lg font-bold mb-4">Welcome to my Features App powered by React, Typescript, and Laravel</h3>
                 <p>This application allows users to interact with various Features, each with a title and description. Depending on your role, you have access to different functionality. Here's a breakdown of what each role can do:</p>

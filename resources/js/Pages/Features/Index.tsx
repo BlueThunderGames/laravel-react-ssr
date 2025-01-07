@@ -45,6 +45,10 @@ export default function Index({auth, features: initialFeatures, page: initialPag
         }
     };
 
+    const handleDelete = (id: number) => {
+        setFeatures((prevFeatures) => prevFeatures.filter((feature) => feature.id !== id));
+    };
+
     useEffect(() => {
         const handleObserver = (entities: IntersectionObserverEntry[]) => {
             const target = entities[0];
@@ -80,7 +84,7 @@ export default function Index({auth, features: initialFeatures, page: initialPag
                 </h2>
             }
         >
-            <Head title="Features" />  
+            <Head title="View Features" />  
             {can(auth.user, 'manage_features') && <div className="mb-8">
                 <Link href={route('feature.create')} className="inline-flex items-center rounded-md border border-transparent bg-gray-800 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white transition duration-150 ease-in-out hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 active:bg-gray-900 dark:bg-gray-200 dark:text-gray-800 dark:hover:bg-white dark:focus:bg-white dark:focus:ring-offset-gray-800 dark:active:bg-gray-300">
                     Create New Feature
@@ -88,7 +92,11 @@ export default function Index({auth, features: initialFeatures, page: initialPag
             </div>}
                     
                 {features.map((feature) => (
-                    <FeatureItem key={feature.id} feature={feature} />
+                    <FeatureItem 
+                        key={feature.id} 
+                        feature={feature} 
+                        onDelete={handleDelete}
+                    />
                 ))}
                 <div id="load-more-trigger" className="h-1"></div>
                 {loading && <p>Loading more features...</p>}

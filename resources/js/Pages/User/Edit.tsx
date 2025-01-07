@@ -38,7 +38,7 @@ export default function Edit({roles, user, roleLabels}: {roles: any, user: User,
                 </h2>
             }
         >
-            <Head title={`Edit user ` + user.name} />            
+            <Head title={`Edit User ` + user.name} />            
             <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800 mb-4">
                 <div className="p-6 text-gray-900 dark:text-gray-100 flex gap-8">
                     <form onSubmit={updateuser} className="w-full">

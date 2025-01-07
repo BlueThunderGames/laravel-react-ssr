@@ -10,7 +10,7 @@ export default function NotFoundGuest() {
                 </h2>
             }
         >
-            <Head title="Features App Page Not Found" />
+            <Head title="Page Not Found" />
             <div className="intro-upper mb-6">
                 <h3 className="text-lg font-bold mb-4">Error! Page Not Found!</h3>
                 <p>Sorry, the page you are looking for could not be found. Please check the URL in the address bar and try again.</p>

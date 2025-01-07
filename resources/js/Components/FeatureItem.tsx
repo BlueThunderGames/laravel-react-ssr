@@ -4,9 +4,14 @@ import {Link} from '@inertiajs/react';
 import FeatureActionsDropdown from './FeatureActionsDropdown';
 import FeatureUpvoteDownvote from './FeatureUpvoteDownvote';
 
+interface FeatureItemProps {
+    feature: Feature;
+    onDelete: (id: number) => void;
+}
 
-export default function FeatureItem({feature} : {feature: Feature})
+const FeatureItem: React.FC<FeatureItemProps> = ({ feature, onDelete }) => 
 {
+
     const [isExpanded, setIsExpanded] = useState(false);
 
     const toggleReadMore = () => {
@@ -46,9 +51,10 @@ export default function FeatureItem({feature} : {feature: Feature})
                     </div>
                 </div>
                 <div>
-                    <FeatureActionsDropdown feature={feature} />
+                    <FeatureActionsDropdown feature={feature} onDelete={onDelete} />
                 </div>
             </div>
         </div>
     )
 }
+export default FeatureItem;
