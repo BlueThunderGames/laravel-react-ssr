@@ -30,7 +30,6 @@ export default function Authenticated({
 
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink
-                                    prefetch="hover"
                                     href={route('feature.index')}
                                     active={route().current('feature.index')}
                                 >
@@ -38,7 +37,6 @@ export default function Authenticated({
                                 </NavLink>
                                 {hasRole(user, 'admin') && (
                                 <NavLink
-                                    prefetch="hover"
                                     href={route('user.index')}
                                     active={route().current('user.index')}
                                 >
