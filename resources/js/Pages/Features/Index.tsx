@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef} from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Feature } from '@/types';
-import { Head, usePoll , Link} from '@inertiajs/react';
+import { Head, Link} from '@inertiajs/react';
 import FeatureItem from '@/Components/FeatureItem';
 import {can} from '@/helpers';
 import { PageProps } from '@/types';
@@ -72,9 +72,6 @@ export default function Index({auth, features: initialFeatures, page: initialPag
             }
         };
     }, [loading, hasMore]);
-
-
-    usePoll(3000);
 
     return (
         <AuthenticatedLayout
