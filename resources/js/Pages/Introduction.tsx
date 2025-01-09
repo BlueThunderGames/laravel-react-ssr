@@ -20,7 +20,7 @@ export default function Introduction() {
                 <ul className="list-disc ml-6">
                     <li>Manage Users</li>
                     <li>Manage Features</li>
-                    <li>Manage Comments</li>
+                    <li>Comment on Features</li>
                     <li>Upvote and Downvote Features</li>
                 </ul>
             </div>
